@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-jet-application-mark class="block h-9 w-auto" />
+                        <img src="{{ URL('images/SpeedyLogo36c36.png') }}" alt="">
                     </a>
                 </div>
 
@@ -15,6 +15,15 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
+
+                    <x-jet-nav-link href="/orders" :active="request()->routeIs('orders')">
+                        {{ __('Mis Pedidos') }}
+                    </x-jet-nav-link>
+
+                    <x-jet-nav-link href="/orders/create" :active="request()->routeIs('/orders/create')">
+                        {{ __('Crear Pedido') }}
+                    </x-jet-nav-link>
+
                 </div>
             </div>
 

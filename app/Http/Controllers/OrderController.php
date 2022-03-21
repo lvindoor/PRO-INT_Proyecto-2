@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Machine;
+use App\Models\Package;
+use App\Models\DeliveryPoint;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -14,7 +18,10 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $deliveryPoints = DeliveryPoint::all();
+        $packages = Package::all();
+        $orders = Order::where('user_id', auth()->id())->get();
+        return view('pages.orders', compact('orders', 'packages', 'deliveryPoints'));
     }
 
     /**
@@ -24,7 +31,10 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        $machines = Machine::all();
+        $packages = Package::all();
+        $deliveryPoints = DeliveryPoint::all();
+        return view('pages.orders-form', compact('deliveryPoints', 'machines', 'packages'));
     }
 
     /**
@@ -35,7 +45,22 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'machine_id' => 'required|not_in:0',
+            'package_id' => 'required|not_in:0',
+            'rating' => 'required|not_in:0|min:1|max:5'
+        ]);
+
+
+        $order = new Order();
+        $order->machine_id = $request->machine_id;
+        $order->package_id = $request->package_id;
+        $order->user_id = auth()->id();
+        $order->rating = $request->rating;
+        $order->delivered = false;
+        $order->save();
+
+        return redirect('/orders');
     }
 
     /**
@@ -46,7 +71,10 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        $machines = Machine::all();
+        $packages = Package::all();
+        $deliveryPoints = DeliveryPoint::all();
+        return view('pages.show-orders', compact('order', 'deliveryPoints', 'machines', 'packages'));
     }
 
     /**
@@ -57,7 +85,10 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
+        $machines = Machine::all();
+        $packages = Package::all();
+        $deliveryPoints = DeliveryPoint::all();
+        return view('pages.orders-form', compact('order' ,'deliveryPoints', 'machines', 'packages'));
     }
 
     /**
@@ -69,7 +100,20 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        $request->validate([
+            'machine_id' => 'required|min:1',
+            'package_id' => 'required|min:1',
+            'rating' => 'required|min:1|max:5'
+        ]);
+
+        $order->machine_id = $request->machine_id;
+        $order->package_id = $request->package_id;
+        $order->user_id = auth()->id();
+        $order->rating = $request->rating;
+        $order->delivered = false;
+        $order->save();
+
+        return redirect('/orders');
     }
 
     /**
@@ -80,6 +124,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        $order->delete();
+        return redirect('/orders');
     }
 }
