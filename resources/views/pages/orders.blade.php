@@ -25,8 +25,8 @@
                       @foreach ($orders as $order)
                         <tr>
                             <td>{{ $order->id }}</td>
-                            <td>{{ $deliveryPoints->where('id', $order->machine_id)->first()->location }}</td>
-                            <td>{{ $packages->where('id', $order->package_id)->first()->name }}</td>
+                            <td>{{ $order->machine->deliveryPoint->location }}</td>
+                            <td>{{ $order->package->name }}</td>
                             <td>{{ $order->delivered ? "Si" : "No" }}</td>
                             <td>{{ $order->rating }}</td>
                             <td>

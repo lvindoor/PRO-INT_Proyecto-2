@@ -18,10 +18,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $deliveryPoints = DeliveryPoint::all();
-        $packages = Package::all();
         $orders = Order::where('user_id', auth()->id())->get();
-        return view('pages.orders', compact('orders', 'packages', 'deliveryPoints'));
+        return view('pages.orders', compact('orders'));
     }
 
     /**
@@ -31,10 +29,9 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $machines = Machine::all();
         $packages = Package::all();
         $deliveryPoints = DeliveryPoint::all();
-        return view('pages.orders-form', compact('deliveryPoints', 'machines', 'packages'));
+        return view('pages.orders-form', compact('deliveryPoints', 'packages'));
     }
 
     /**
@@ -71,10 +68,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        $machines = Machine::all();
-        $packages = Package::all();
-        $deliveryPoints = DeliveryPoint::all();
-        return view('pages.show-orders', compact('order', 'deliveryPoints', 'machines', 'packages'));
+        return view('pages.show-orders', compact('order'));
     }
 
     /**

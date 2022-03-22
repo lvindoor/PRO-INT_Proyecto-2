@@ -9,4 +9,8 @@ class DeliveryPoint extends Model
 {
     use HasFactory;
     public $timestamps = false;
+
+    public function machine() {
+        return $this->belongsTo(Machine::class);
+    }
 }

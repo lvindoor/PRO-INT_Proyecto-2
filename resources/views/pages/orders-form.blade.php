@@ -43,7 +43,7 @@
                                                         id="inlineFormCustomSelectPref">
                                                         <option value="0" @if(isset($order)) selected @endif>Ubicacion</option>
                                                         @foreach ($deliveryPoints as $deliveryPoint)
-                                                            <option value=" {{ $deliveryPoint->id }} " {{ isset($order) && $order->machine_id == $deliveryPoint->id ? 'selected' : '' }} >
+                                                            <option value=" {{ $deliveryPoint->id }} " {{ isset($order) && $order->machine->deliveryPoint->id == $deliveryPoint->id ? 'selected' : '' }} >
                                                                 {{ $deliveryPoint->location }}
                                                             </option>
                                                         @endforeach
@@ -58,7 +58,7 @@
                                                         id="inlineFormCustomSelectPref">
                                                         <option value="0" selected>Paquete</option>
                                                         @foreach ($packages as $package)
-                                                            <option value=" {{ $package->id }} " {{ isset($order) && $order->package_id == $package->id ? 'selected' : '' }}> {{ $package->name }} </option>
+                                                            <option value=" {{ $package->id }} " {{ isset($order) && $order->package->id == $package->id ? 'selected' : '' }}> {{ $package->name }} </option>
                                                         @endforeach
                                                     </select><br>
                                                     <div class="valid-feedback">Example invalid custom select feedback
